@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stroll_interview/utils/app_colors.dart';
+import 'package:stroll_interview/utils/responsive_helper.dart';
 
 class StoryHeader extends StatelessWidget {
   final String title;
@@ -18,76 +20,74 @@ class StoryHeader extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Title row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffB3ADF6),
-                    ),
+                    style: TextStyle(
+                        fontSize: ResponsiveHelper.getFontSize(context, 34),
+                        fontWeight: FontWeight.bold,
+                        color: ColorPaths.primaryColor),
                   ),
                   const SizedBox(width: 12),
                   const Icon(
                     Icons.keyboard_arrow_down_rounded,
-                    color: Color(0xffB3ADF6),
+                    color: ColorPaths.primaryColor,
                     size: 25,
                   ),
                 ],
               ),
-             const Center(
-               child:  Row( 
+               Center(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.timer_outlined,
-                      color: Colors.white,
-                      size: 16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                       const  Icon(
+                          Icons.timer_outlined,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '22h 00m',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: ResponsiveHelper.getFontSize(context, 12),
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(width: 4),
-                    const Text(
-                      '22h 00m',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                ),
-                 SizedBox(width: 12,),
-                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.person_outline_sharp,
-                      color: Colors.white,
-                      size: 16,
+                    const SizedBox(
+                      width: 12,
                     ),
-                    const SizedBox(width: 2),
-                    const Text(
-                      '103',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                      ),
-                    )
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                       const  Icon(
+                          Icons.person_outline_sharp,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          '103',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: ResponsiveHelper.getFontSize(context, 12),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                  ],
-                ),
-             ),
-             
+              ),
             ],
           ),
-          
         ],
       ),
     );

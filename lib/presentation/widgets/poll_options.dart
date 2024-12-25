@@ -1,20 +1,10 @@
-// First, create a StateNotifier to manage the selected index
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stroll_interview/domain/models/poll_option_details.dart';
+import 'package:stroll_interview/domain/providers/poll_providers.dart';
+import 'package:stroll_interview/utils/responsive_helper.dart';
 
-class SelectedPollOptionNotifier extends StateNotifier<int?> {
-  SelectedPollOptionNotifier() : super(null);
-
-  void selectOption(int index) {
-    state = index;
-  }
-}
-
-final selectedPollOptionProvider =
-    StateNotifierProvider<SelectedPollOptionNotifier, int?>((ref) {
-  return SelectedPollOptionNotifier();
-});
 
 class PollOptions extends ConsumerWidget {
   const PollOptions({super.key});
@@ -39,14 +29,16 @@ class PollOptions extends ConsumerWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(
+  horizontal: ResponsiveHelper.defaultPadding(context)
+),
       child: GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
-        childAspectRatio: 2.5,
+        childAspectRatio: ResponsiveHelper.isMobile(context) ? 2.5 : 3.5,
         children: options.asMap().entries.map((entry) {
           final index = entry.key;
           final option = entry.value;
@@ -70,7 +62,7 @@ class PollOptions extends ConsumerWidget {
       child: Container(
         decoration: BoxDecoration(
           color: isSelected 
-              ? const Color(0xff8B88EF).withOpacity(0.2)  // Purple background when selected
+              ? const Color(0xff8B88EF).withOpacity(0.2)  
               : const Color(0xff232A2E),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(

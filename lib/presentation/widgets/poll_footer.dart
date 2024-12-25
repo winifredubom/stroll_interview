@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stroll_interview/utils/app_colors.dart';
+import 'package:stroll_interview/utils/responsive_helper.dart';
 
 class PollFooter extends StatelessWidget {
   final VoidCallback? onVoicePressed;
@@ -17,12 +19,11 @@ class PollFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Instructions text row
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Pick your option.',
                 style: TextStyle(
                   color: Colors.white,
@@ -40,29 +41,26 @@ class PollFooter extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          // Action buttons row
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Voice button
               Container(
-                width: 40,
-                height: 40,
+                width: ResponsiveHelper.getWidth(context, 40),
+                height: ResponsiveHelper.getHeight(context, 40),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Color(0xff8B88EF),
-                    width: 2,
-                  )
-                ),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: ColorPaths.bottomColor,
+                      width: 2,
+                    )),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: onVoicePressed,
-                    child: Icon(
+                    child: const Icon(
                       Icons.mic,
-                      color: Color(0xff8B88EF),
+                      color: ColorPaths.bottomColor,
                       size: 30,
                     ),
                   ),
@@ -73,9 +71,7 @@ class PollFooter extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xff8B88EF),
-                ),
+                    shape: BoxShape.circle, color: ColorPaths.bottomColor),
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_forward,

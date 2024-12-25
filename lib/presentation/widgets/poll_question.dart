@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stroll_interview/utils/responsive_helper.dart';
 
 class PollQuestion extends StatelessWidget {
   final String username;
@@ -16,49 +17,52 @@ class PollQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.all(ResponsiveHelper.defaultPadding(context)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Circle Avatar
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white,
-                width: 2,
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
               ),
-              shape: BoxShape.circle,
-            ),
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('asset/Joey 2.png'),
-              radius: 24,
+              child: CircleAvatar(
+                backgroundImage: const AssetImage('asset/Joey 2.png'),
+                radius: ResponsiveHelper.getWidth(context, 30),
+              ),
             ),
           ),
-          const SizedBox(width: 16),
-          // Text Column
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  username,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text(
+                    username,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  question,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    question,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(left: 0),
                   child: Text(
                     userAnswer,
                     style: GoogleFonts.inter(

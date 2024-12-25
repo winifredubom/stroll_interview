@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class PollOption {
   final String text;
