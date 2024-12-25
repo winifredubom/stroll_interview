@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stroll_interview/presentation/widgets/bottom_bar.dart';
 import 'package:stroll_interview/presentation/widgets/home_header.dart';
+import 'package:stroll_interview/presentation/widgets/poll_footer.dart';
 import 'package:stroll_interview/presentation/widgets/poll_options.dart';
 import 'package:stroll_interview/presentation/widgets/poll_question.dart';
 
@@ -48,10 +49,16 @@ class StoryScreen extends ConsumerWidget {
                    children: [
                      const PollQuestion(
                        username: 'Angeline, 28',
-                       question: 'What is your favorite time of the day?', userAnswer: '',
+                       question: 'What is your favorite time of the day?', userAnswer: '“Mine is definitely the peace in the morning.”',
                      ),
                      const PollOptions(),
                      const SizedBox(height: 20),
+                     PollFooter(
+                       onVoicePressed: () {
+                       },
+                       onNextPressed: () {
+                       },
+                     ),
                      CustomBottomNavigationBar(),
                    ],
                  ),

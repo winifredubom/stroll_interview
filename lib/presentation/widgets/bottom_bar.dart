@@ -1,94 +1,141 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+final int chatBadgeCount;
+final int trendingBadgeCount;
+
+const CustomBottomNavigationBar({
+  super.key, 
+  this.chatBadgeCount = 0,
+  this.trendingBadgeCount = 0,
+});
+
+@override
+_CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _currentIndex = 0;
+int _currentIndex = 0;
 
-  // List of items with assets, icons, and badges
-  final List<_NavBarItem> _items = [
-    _NavBarItem(
-      badgeCount: 0,
-      assetPath: 'asset/Card.jpg', // Use asset path if you want to replace icon
-    ),
-    _NavBarItem(
-      badgeCount: 3,
-      assetPath: null,
-    ),
-    _NavBarItem(
-      badgeCount: 0,
-      assetPath: null,
-    ),
-    _NavBarItem(
-      badgeCount: 1,
-      assetPath: 'asset/User.jpg',
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Selected: '),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: _items.map((item) {
-          return BottomNavigationBarItem(
-            
-            icon: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                if (item.assetPath != null)
-                  Image.asset(
-                    item.assetPath!,
-                    height: 24,
-                    width: 24,
-                  )
-                else
-                if (item.badgeCount > 0)
-                  Positioned(
-                    right: -6,
-                    top: -6,
-                    child: Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        item.badgeCount.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
+Widget _buildIcon({
+  IconData? icon,
+  String? assetPath,
+  required double size,
+  required Color color,
+  int? badgeCount,
+  bool showEmptyBadge = false,
+}) {
+  assert(icon != null || assetPath != null, 'Either icon or assetPath must be provided');
+  
+  Widget iconWidget;
+  if (icon != null) {
+    iconWidget = Icon(
+      icon,
+      size: size,
+      color: color,
+    );
+  } else {
+    iconWidget = Image.asset(
+      assetPath!,
+      width: size,
+      height: size,
+      color: color,
     );
   }
+
+  if (badgeCount == null && !showEmptyBadge) {
+    return iconWidget;
+  }
+
+  return Stack(
+    clipBehavior: Clip.none,
+    children: [
+      iconWidget,
+      Positioned(
+        right: -8,
+        top: -8,
+        child: Container(
+          height: 6,
+          padding: const EdgeInsets.all(4),
+          decoration:const BoxDecoration(
+            color: Color(0xffB5B2FF),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(6))
+          ),
+          constraints:const BoxConstraints(
+            minWidth: 16,
+            minHeight: 16,
+          ),
+          child: badgeCount != null ? Text(
+            badgeCount > 99 ? '99+' : badgeCount.toString(),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 8,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ) : const  SizedBox(
+            width: 8,
+            height: 8,
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
-class _NavBarItem {
-  final int badgeCount;
-  final String? assetPath;
-
-  _NavBarItem({
-    this.badgeCount = 0,
-    this.assetPath,
-  });
+@override
+Widget build(BuildContext context) {
+  return BottomNavigationBar(
+    currentIndex: _currentIndex,
+    onTap: (index) {
+      setState(() {
+        _currentIndex = index;
+      });
+    },
+    type: BottomNavigationBarType.fixed,
+    backgroundColor: Colors.black,
+    selectedItemColor: Colors.grey,
+    unselectedItemColor: Colors.grey,
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
+    items: [
+      BottomNavigationBarItem(
+        icon: _buildIcon(
+          icon: MdiIcons.cardsOutline,
+          size: 27,
+          color: _currentIndex == 0 ? Colors.grey : Colors.grey,
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: _buildIcon(
+          assetPath: 'asset/trending-topic.png', 
+          size: 24,
+          color: _currentIndex == 1 ? Colors.blue : Colors.grey,
+          showEmptyBadge: true,
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: _buildIcon(
+          assetPath: 'asset/chat.png', 
+          size: 24,
+          color: _currentIndex == 2 ? Colors.blue : Colors.grey,
+          badgeCount: 10,
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: _buildIcon(
+          icon: MdiIcons.accountOutline, 
+          size: 24,
+          color: _currentIndex == 3 ? Colors.blue : Colors.grey,
+        ),
+        label: '',
+      ),
+    ],
+  );
+}
 }
